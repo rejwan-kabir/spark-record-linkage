@@ -53,5 +53,6 @@ object Main {
       .toDF("product_name", "listings")
 
     pair.coalesce(1).write.json(outputDir)
+    spark.stop()
   }
 }
