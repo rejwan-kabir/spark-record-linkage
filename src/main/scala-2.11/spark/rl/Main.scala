@@ -23,16 +23,16 @@ object Main {
       return
     }
     var inputDir = args(0)
-    if (!inputDir.endsWith("/")) {
-      inputDir = inputDir + "/"
+    if (inputDir.endsWith("/")) {
+      inputDir = inputDir.substring(0, inputDir.length-1)
     }
     var outputDir = args(1)
-    if (!outputDir.endsWith("/")) {
-      outputDir = outputDir + "/"
-      Try(Path(outputDir).deleteRecursively())
+    if (outputDir.endsWith("/")) {
+      outputDir = outputDir.substring(0, outputDir.length-1)
     }
-    val products = spark.read.json(inputDir + "products.txt")
-    val listings = spark.read.json(inputDir + "listings.txt")
+    Try(Path(outputDir).deleteRecursively())
+    val products = spark.read.json(inputDir + "/products.txt")
+    val listings = spark.read.json(inputDir + "/listings.txt")
     val combined = products.as("p").join(listings.as("l"), $"p.manufacturer" <=> $"l.manufacturer")
       .groupBy($"p.manufacturer", $"p.model", $"p.family", $"l.currency", $"l.price")
       .agg(first($"p.product_name").as("product_name"), first($"l.title").as("title"))
