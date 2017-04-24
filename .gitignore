@@ -4,4 +4,4 @@ target/
 /spark-warehouse/
 /output/
 /logs/
-/project/build.properties
+project/build.properties
