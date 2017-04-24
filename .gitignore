@@ -2,5 +2,5 @@
 *.iml
 target/
 /spark-warehouse/
-/project/
 /output/
+/logs/
